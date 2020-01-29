@@ -4,7 +4,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 //my own imports
 import 'package:flutter_ecommerce_application/components/horizontal_listview.dart';
 import 'package:flutter_ecommerce_application/components/products.dart';
-
+import 'package:flutter_ecommerce_application/pages/cart.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
         // animationDuration: Duration(milliseconds: 1000),
         dotSize: 4.0,
         indicatorBgPadding: 2.0,
+        dotBgColor: Colors.transparent,
       ),
     );
     return Scaffold(
@@ -56,7 +57,9 @@ class _HomePageState extends State<HomePage> {
                 Icons.shopping_cart,
                 color: Colors.white,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder:(context)=> Cart()));
+              }),
         ],
       ),
       drawer: Drawer(
@@ -102,10 +105,12 @@ class _HomePageState extends State<HomePage> {
             ),
 
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder:(context)=> Cart()));
+              },
               child: ListTile(
-                title: Text("Categories"),
-                leading: Icon(Icons.dashboard, color: Colors.red),
+                title: Text("Shopping Cart"),
+                leading: Icon(Icons.shopping_cart, color: Colors.red),
               ),
             ),
 
@@ -137,31 +142,30 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: ListView(
+      body: Column(
         children: <Widget>[
           //image_carousel begins here
-          image_carousel,
+          //image_carousel,
 
           //padding widget
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Categories"),
-          ),
+            padding: const EdgeInsets.all(4.0),
+            child: Container(alignment: Alignment.centerLeft, child: Text("Categories")),
+          ), 
 
           //Horizontal list view begins here
           HorizontalList(),
 
           //padding widget
           Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text("Recent products"),
+            padding: const EdgeInsets.all(8.0),
+            child: Container(alignment: Alignment.centerLeft, child: Text("Recent products")),
           ),
 
           //gridview
-          Container(
-            height: 320.0,
-            child: Products(),
-          )
+        
+          Flexible(child: Products()),
+          
 
         ],
       ),

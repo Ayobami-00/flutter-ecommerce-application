@@ -52,11 +52,14 @@ class _ProductsState extends State<Products> {
         gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
-          return Single_prod(
-            prod_name: product_list[index]["name"],
-            prod_picture: product_list[index]["picture"],
-            prod_old_price: product_list[index]["old_price"],
-            prod_price: product_list[index]["price"],
+          return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Single_prod(
+              prod_name: product_list[index]["name"],
+              prod_picture: product_list[index]["picture"],
+              prod_old_price: product_list[index]["old_price"],
+              prod_price: product_list[index]["price"],
+            ),
           );
         });
   }
@@ -90,24 +93,16 @@ class Single_prod extends StatelessWidget {
                   ))),
           child: GridTile(
             footer: Container(
-                color: Colors.white70,
-                child: ListTile(
-                  leading: Text(
-                    prod_name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  title: Text(
-                    "\$$prod_price",
-                    style: TextStyle(
-                        color: Colors.red, fontWeight: FontWeight.w800),
-                  ),
-                  subtitle: Text(
-                    "\$$prod_old_price",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w800,
-                        decoration: TextDecoration.lineThrough),
-                  ),
+                color: Colors.white,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(prod_name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16.0)),
+                    ),
+
+                    Text("\$$prod_price", style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
+
+                  ],
                 )),
             child: Image.asset(
               prod_picture,
