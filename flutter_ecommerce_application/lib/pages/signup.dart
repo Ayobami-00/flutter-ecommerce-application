@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce_application/commons/common.dart';
+import 'package:flutter_ecommerce_application/db/auth.dart';
 import 'package:flutter_ecommerce_application/pages/home.dart';
 import '../db/users.dart';
 
@@ -11,7 +13,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
-  UserServices _userServices =  UserServices();
+  UserServices _userServices = UserServices();
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _confirmPasswordTextController =
@@ -21,61 +23,59 @@ class _SignUpState extends State<SignUp> {
   String gender;
   String groupValue = "male";
   bool hidePass = true;
+  Auth auth = Auth();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Image.asset(
-            'images/back.jpg',
-            fit: BoxFit.fill,
-            width: double.infinity,
-            height: double.infinity,
-          ),
-          Container(
-              alignment: Alignment.topCenter,
-              child: Image.asset('images/logo.png')),
-          Container(
-            color: Colors.black.withOpacity(0.4),
-            width: double.infinity,
-            height: double.infinity,
-          ),
           Padding(
-            padding: const EdgeInsets.only(top: 300.0),
-            child: Center(
+            padding: const EdgeInsets.only(top: 0.0),
               child: Form(
                 key: _formKey,
-                child: ListView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
+                      padding: const EdgeInsets.all(0.0),
+                      child: Container(
+                        alignment: Alignment.topCenter,
+                        child: Image.asset(
+                          'images/logo.png',
+                          width: 200.0,
+                          fit: BoxFit.fill,
+                        ),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 8.0),
                       child: Material(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.grey.withOpacity(0.4),
                         elevation: 0.0,
                         child: Padding(
                           padding:
                               const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                                  hintText: "Full name",
-                                  icon: Icon(Icons.person_outline),
-                                  border: InputBorder.none),
-                              keyboardType: TextInputType.emailAddress,
-                              controller: _nameTextController,
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return "The name filed cannot be empty";
-                                }
-                                return null;
-                              }),
+                          child: ListTile(
+                            title: TextFormField(
+                                decoration: InputDecoration(
+                                    hintText: "Full name",
+                                    icon: Icon(Icons.person_outline),
+                                    border: InputBorder.none),
+                                keyboardType: TextInputType.emailAddress,
+                                controller: _nameTextController,
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return "The name filed cannot be empty";
+                                  }
+                                  return null;
+                                }),
+                          ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                      padding: const EdgeInsets.fromLTRB(14.0, 0.0, 14.0, 8.0),
                       child: Container(
-                        color: Colors.white.withOpacity(0.8),
                         child: Row(
                           children: <Widget>[
                             Expanded(
@@ -83,7 +83,7 @@ class _SignUpState extends State<SignUp> {
                                 title: Text(
                                   "Male",
                                   textAlign: TextAlign.end,
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.black),
                                 ),
                                 trailing: Radio(
                                     value: "male",
@@ -96,7 +96,7 @@ class _SignUpState extends State<SignUp> {
                                 title: Text(
                                   "Female",
                                   textAlign: TextAlign.end,
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.black),
                                 ),
                                 trailing: Radio(
                                     value: "female",
@@ -112,29 +112,31 @@ class _SignUpState extends State<SignUp> {
                       padding: const EdgeInsets.all(8.0),
                       child: Material(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.grey.withOpacity(0.8),
                         elevation: 0.0,
                         child: Padding(
                           padding:
                               const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
-                          child: TextFormField(
-                              decoration: InputDecoration(
-                                  hintText: "Email",
-                                  icon: Icon(Icons.alternate_email),
-                                  border: InputBorder.none),
-                              keyboardType: TextInputType.emailAddress,
-                              controller: _emailTextController,
-                              validator: (value){
-                                if (value.isEmpty) {
-                                  Pattern pattern =
-                                      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                                  RegExp regex = RegExp(pattern);
-                                  if (!regex.hasMatch(value))
-                                    return "Please make sure your email address is valid";
-                                  else
-                                    return null;
-                                }
-                              }),
+                          child: ListTile(
+                            title: TextFormField(
+                                decoration: InputDecoration(
+                                    hintText: "Email",
+                                    icon: Icon(Icons.alternate_email),
+                                    border: InputBorder.none),
+                                keyboardType: TextInputType.emailAddress,
+                                controller: _emailTextController,
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    Pattern pattern =
+                                        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                    RegExp regex = RegExp(pattern);
+                                    if (!regex.hasMatch(value))
+                                      return "Please make sure your email address is valid";
+                                    else
+                                      return null;
+                                  }
+                                }),
+                          ),
                         ),
                       ),
                     ),
@@ -142,7 +144,7 @@ class _SignUpState extends State<SignUp> {
                       padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
                       child: Material(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.grey.withOpacity(0.8),
                         elevation: 0.0,
                         child: Padding(
                           padding:
@@ -175,46 +177,46 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
-                      child: Material(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white.withOpacity(0.8),
-                        elevation: 0.0,
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
-                          child: ListTile(
-                              title: TextFormField(
-                                  decoration: InputDecoration(
-                                      hintText: "Confirm password",
-                                      icon: Icon(Icons.lock_outline),
-                                      border: InputBorder.none),
-                                  keyboardType: TextInputType.emailAddress,
-                                  controller: _confirmPasswordTextController,
-                                  obscureText: hidePass,
-                                  validator: (value) {
-                                    if (value.isEmpty) {
-                                      return "The password filed cannot be empty";
-                                    } else if (value.length < 6) {
-                                      return "The password has to be at least 6 characters long";
-                                    } else if (_passwordTextController.text !=
-                                        value) {
-                                      return "The passwords do not match";
-                                    }
-                                    return null;
-                                  }),
-                              trailing: IconButton(
-                                icon: Icon(Icons.remove_red_eye),
-                                onPressed: () {
-                                  setState(() {
-                                    hidePass = false;
-                                  });
-                                },
-                              )),
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
+                    //   child: Material(
+                    //     borderRadius: BorderRadius.circular(10.0),
+                    //     color: Colors.white.withOpacity(0.8),
+                    //     elevation: 0.0,
+                    //     child: Padding(
+                    //       padding:
+                    //           const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                    //       child: ListTile(
+                    //           title: TextFormField(
+                    //               decoration: InputDecoration(
+                    //                   hintText: "Confirm password",
+                    //                   icon: Icon(Icons.lock_outline),
+                    //                   border: InputBorder.none),
+                    //               keyboardType: TextInputType.emailAddress,
+                    //               controller: _confirmPasswordTextController,
+                    //               obscureText: hidePass,
+                    //               validator: (value) {
+                    //                 if (value.isEmpty) {
+                    //                   return "The password filed cannot be empty";
+                    //                 } else if (value.length < 6) {
+                    //                   return "The password has to be at least 6 characters long";
+                    //                 } else if (_passwordTextController.text !=
+                    //                     value) {
+                    //                   return "The passwords do not match";
+                    //                 }
+                    //                 return null;
+                    //               }),
+                    //           trailing: IconButton(
+                    //             icon: Icon(Icons.remove_red_eye),
+                    //             onPressed: () {
+                    //               setState(() {
+                    //                 hidePass = false;
+                    //               });
+                    //             },
+                    //           )),
+                    //     ),
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
                       child: Material(
@@ -222,8 +224,8 @@ class _SignUpState extends State<SignUp> {
                           color: Colors.red.shade700,
                           elevation: 0.0,
                           child: MaterialButton(
-                            onPressed: () async{
-                              validateForm();
+                            onPressed: () async {
+                              // validateForm();
                             },
                             minWidth: MediaQuery.of(context).size.width,
                             child: Text(
@@ -245,15 +247,53 @@ class _SignUpState extends State<SignUp> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                "Login",
-                                style: TextStyle(color: Colors.blue),
+                                "I already have an account",
+                                style: TextStyle(
+                                    color: Colors.deepOrange, fontSize: 16),
                                 textAlign: TextAlign.center,
                               ))),
-                    )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Or sign Up with",
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.grey),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: MaterialButton(
+                                onPressed: () async{
+                                  FirebaseUser user = await auth.googleSignIn();
+                                  if(user == null){
+                                    _userServices.createUser(
+                                      {
+                                        "name": user.displayName,
+                                        "photo": user.photoUrl,
+                                        "email": user.email,
+                                        "userId": user.uid
+                                      });
+                                      changeScreenReplacement(context, HomePage());
+                                  }
+                                },
+                                child: Image.asset(
+                                  "images/ggg.png",
+                                  width: 30,
+                                )),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
-            ),
+          
           ),
           Visibility(
               visible: loading ?? true,
@@ -300,36 +340,35 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  Future validateForm() async {
-    FormState formState = _formKey.currentState;
-    
-    if (formState.validate()) {
-      formState.reset();
-      FirebaseUser user = await firebaseAuth.getUser();
-      if (user == null) {
-        firebaseAuth.createUserWithEmailAndPassword(
-            email: _emailTextController.text,
-            password: _passwordTextController.text).then(
-              (user)=>{
-                _userServices.createUser(
-                  user.uid.toString(),
-                  {
-                  "username": _nameTextController.text,
-                  "email": user.email,
-                  "userId": user.uid,
-                  "gender": gender,
-                  
-                  
-                })
-                
-              }).catchError((err)=>{
-                print(err.toString())
-                });
+  // Future validateForm() async {
+  //   FormState formState = _formKey.currentState;
 
-                Navigator.pushReplacement(
-         context, MaterialPageRoute(builder: (context) => HomePage()));
-   
-      }
-    }
-  }
+  //   if (formState.validate()) {
+  //     formState.reset();
+  //     FirebaseUser user = await firebaseAuth.getUser();
+  //     if (user == null) {
+  //       firebaseAuth.createUserWithEmailAndPassword(
+  //           email: _emailTextController.text,
+  //           password: _passwordTextController.text).then(
+  //             (user)=>{
+  //               _userServices.createUser(
+  //                 user.uid.toString(),
+  //               //   {
+  //               //   "username": _nameTextController.text,
+  //               //   "email": user.email,
+  //               //   "userId": user.uid,
+  //               //   "gender": gender,
+
+  //               // })
+
+  //             }).catchError((err)=>{
+  //               print(err.toString())
+  //               });
+
+  //               Navigator.pushReplacement(
+  //        context, MaterialPageRoute(builder: (context) => HomePage()));
+
+  //     }
+  //   }
+  // }
 }
