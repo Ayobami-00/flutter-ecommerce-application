@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce_application/pages/home.dart';
-import 'package:flutter_ecommerce_application/pages/login.dart';
-import 'package:flutter_ecommerce_application/pages/splash.dart';
-import 'package:flutter_ecommerce_application/provider/provider.dart';
+import 'package:flutter_ecommerce_application/screens/home.dart';
+import 'package:flutter_ecommerce_application/screens/login.dart';
+import 'package:flutter_ecommerce_application/screens/splash.dart';
+import 'package:flutter_ecommerce_application/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
