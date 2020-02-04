@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce_application/commons/common.dart';
 import 'package:flutter_ecommerce_application/pages/product_details.dart';
 
 class Products extends StatefulWidget {
@@ -30,7 +31,7 @@ class _ProductsState extends State<Products> {
       "name": 'Black dress',
       "picture": "images/products/dress2.jpeg",
       "old_price": 300,
-      "price": 150,
+      "price": 10,
     },
     {
       "name": 'High heels',
@@ -78,13 +79,12 @@ class Single_prod extends StatelessWidget {
       this.prod_price});
   @override
   Widget build(BuildContext context) {
-    return Card(
-        child: Hero(
-      tag: Text("Hero 1"),
-      child: Material(
+    return Container(
+      child: Card(
+          child: Material(
         child: InkWell(
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            // here we are passsing the values of product to the product detail page
+              // here we are passsing the values of product to the product detail page
               builder: (context) => ProductDetails(
                     product_detail_name: prod_name,
                     product_detail_new_price: prod_price,
@@ -93,24 +93,25 @@ class Single_prod extends StatelessWidget {
                   ))),
           child: GridTile(
             footer: Container(
-                color: Colors.white,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(prod_name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16.0)),
-                    ),
-
-                    Text("\$$prod_price", style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
-
-                  ],
-                )),
+              color: Colors.white,
+              child: ListTile(
+                title: Text(prod_name,
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
+                trailing:Text(
+                  "\$$prod_price",
+                  style:
+                      TextStyle(color: deepOrange,fontSize: 20,fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
             child: Image.asset(
               prod_picture,
               fit: BoxFit.cover,
             ),
           ),
         ),
-      ),
-    ));
+      )),
+    );
   }
 }

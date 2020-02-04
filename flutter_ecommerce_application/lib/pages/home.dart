@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flutter_ecommerce_application/commons/common.dart';
 
 //my own imports
 import 'package:flutter_ecommerce_application/components/horizontal_listview.dart';
 import 'package:flutter_ecommerce_application/components/products.dart';
 import 'package:flutter_ecommerce_application/pages/cart.dart';
+import 'package:flutter_ecommerce_application/provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,8 +15,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
     Widget image_carousel = Container(
       height: 200.0,
       child: Carousel(
@@ -26,9 +31,9 @@ class _HomePageState extends State<HomePage> {
           Image.asset("images/w3.jpeg"),
           Image.asset("images/w4.jpeg"),
         ],
-        autoplay: false,
-        // animationCurve: Curves.fastOutSlowIn,
-        // animationDuration: Duration(milliseconds: 1000),
+        autoplay: true,
+        animationCurve: Curves.fastOutSlowIn,
+        animationDuration: Duration(milliseconds: 1000),
         dotSize: 4.0,
         indicatorBgPadding: 2.0,
         dotBgColor: Colors.transparent,
@@ -36,23 +41,39 @@ class _HomePageState extends State<HomePage> {
     );
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: deepOrange),
         elevation: 0.1,
-        backgroundColor: Colors.red,
-        title: Text("Fashapp"),
+        backgroundColor: white,
+        title: Material(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.grey[50],
+          elevation: 0.0,
+          child: TextFormField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                  hintText: " Search...", border: InputBorder.none),
+              keyboardType: TextInputType.emailAddress,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return "The search field cannot be empty";
+                }
+              }),
+        ),
         actions: <Widget>[
           IconButton(
               icon: Icon(
                 Icons.search,
-                color: Colors.white,
+                color: deepOrange,
               ),
               onPressed: () {}),
           IconButton(
               icon: Icon(
                 Icons.shopping_cart,
-                color: Colors.white,
+                color: deepOrange,
               ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder:(context)=> Cart()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Cart()));
               }),
         ],
       ),
@@ -70,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: deepOrange,
               ),
             ),
             //body
@@ -100,7 +121,8 @@ class _HomePageState extends State<HomePage> {
 
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder:(context)=> Cart()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Cart()));
               },
               child: ListTile(
                 title: Text("Shopping Cart"),
@@ -133,34 +155,49 @@ class _HomePageState extends State<HomePage> {
                 leading: Icon(Icons.help),
               ),
             ),
+
+            InkWell(
+              onTap: () {
+                user.signOut();
+              },
+              child: ListTile(
+                title: Text("Log out"),
+                leading: Icon(Icons.transit_enterexit,color: Colors.grey),
+              ),
+            ),
           ],
         ),
       ),
       body: Column(
         children: <Widget>[
           //image_carousel begins here
-          //image_carousel,
+          image_carousel,
 
           //padding widget
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Container(alignment: Alignment.centerLeft, child: Text("Categories")),
-          ), 
+          // Padding(
+          //   padding: const EdgeInsets.all(4.0),
+          //   child: Container(
+          //       alignment: Alignment.centerLeft, child: Text("Categories")),
+          // ),
 
-          //Horizontal list view begins here
-          HorizontalList(),
+          // //Horizontal list view begins here
+          // HorizontalList(),
 
           //padding widget
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(alignment: Alignment.centerLeft, child: Text("Recent products")),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Recent products")),
+              ),
+            ],
           ),
 
           //gridview
-        
-          Flexible(child: Products()),
-          
 
+          Flexible(child: Products()),
         ],
       ),
     );

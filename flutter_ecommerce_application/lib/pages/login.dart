@@ -1,11 +1,9 @@
 import 'package:cloud_firestore_all/cloud_firestore_all.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce_application/commons/loading.dart';
 import 'package:flutter_ecommerce_application/pages/signup.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_ecommerce_application/provider/provider.dart';
+import 'package:provider/provider.dart';
 import 'home.dart';
 
 class Login extends StatefulWidget {
@@ -15,70 +13,16 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
+  final _key = GlobalKey<ScaffoldState>();
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
-
-  // final GoogleSignIn googleSignIn = GoogleSignIn();
-  // final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  // SharedPreferences preferences;
-  // bool loading = false;
-  // bool isLogedin = false;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   isSignedIn();
-  // }
-
-  // void isSignedIn() async {
-  //   setState(() {
-  //     loading = true;
-  //   });
-  //   preferences = await SharedPreferences.getInstance();
-  //   isLogedin = await googleSignIn.isSignedIn();
-  //   if (isLogedin) {
-  //     Navigator.pushReplacement(
-  //         context, MaterialPageRoute(builder: (context) => HomePage()));
-  //   }
-  //   setState(() {
-  //     loading = false;
-  //   });
-  // }
-
-  // Future handleSignIn() async {
-  //   preferences = await SharedPreferences.getInstance();
-
-  //   setState(() {
-  //     loading = true;
-  //   });
-
-  //   GoogleSignInAccount googleUser = await googleSignIn.signIn();
-  //   GoogleSignInAuthentication googleSignInAuthentication =
-  //       await googleUser.authentication;
-  //   final AuthCredential credential = GoogleAuthProvider.getCredential(
-  //     accessToken: googleSignInAuthentication.accessToken,
-  //     idToken: googleSignInAuthentication.idToken,
-  //   );
-
-  //   final AuthResult authResult =
-  //       await firebaseAuth.signInWithCredential(credential);
-  //   final FirebaseUser firebaseUser = authResult.user;
-
-  //   if(firebaseUser != null){
-  //     final QuerySnapshot result = await Firestore.instance.collection("users").where("id",isEqualTo: firebaseUser.uid).getDocuments();
-  //     final List<DocumentSnapshot> documents = result.documents;
-  //     if(documents.length == 0){
-  //       ///insert the user to our colection
-  //     }
-  //   }else{
-
-  //   }
-  // }
   bool loading = false;
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
     return Scaffold(
-      body: Stack(
+      key: _key,
+      body: user.status== Status.Authenticating ? Loading() : Stack(
         children: <Widget>[
           Image.asset(
             'images/back.jpg',
@@ -163,7 +107,13 @@ class _LoginState extends State<Login> {
                           color: Colors.red.shade700,
                           elevation: 0.0,
                           child: MaterialButton(
-                            onPressed: () {},
+                            onPressed: () async{
+                              if(_formKey.currentState.validate()){
+                                if(!await user.SignIn(_emailTextController.text,_passwordTextController.text))
+                                  _key.currentState.showSnackBar(SnackBar(content: Text("Sign in failed")));
+                              }
+                              
+                            },
                             minWidth: MediaQuery.of(context).size.width,
                             child: Text(
                               "Login",
