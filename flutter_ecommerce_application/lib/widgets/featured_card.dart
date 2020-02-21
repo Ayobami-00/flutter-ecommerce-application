@@ -1,6 +1,5 @@
-import 'package:flutter_ecommerce_application/screens/product_details.dart';
+import 'package:chat_app/screens/product_details.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce_application/screens/product_details.dart';
 
 class FeaturedCard extends StatelessWidget {
   final String name;

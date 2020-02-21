@@ -1,39 +1,45 @@
+import 'package:chat_app/provider/app_provider.dart';
+import 'package:chat_app/screens/home.dart';
+import 'package:chat_app/screens/login.dart';
+import 'package:chat_app/screens/splash.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce_application/screens/home.dart';
-import 'package:flutter_ecommerce_application/screens/login.dart';
-import 'package:flutter_ecommerce_application/screens/splash.dart';
-import 'package:flutter_ecommerce_application/provider/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'provider/user_provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-      create: (_) => UserProvider.initialize(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.red.shade900,
-        ),
-        home: ScreenController(),
-      )));
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider.value(value: UserProvider.initialize()),
+    ChangeNotifierProvider.value(value: AppProvider()),
+
+  ],
+  child: MaterialApp(
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+        primaryColor: Colors.deepOrange
+    ),
+    home: ScreensController(),
+  )));
 }
 
-
-class ScreenController extends StatelessWidget {
+class ScreensController extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
     switch(user.status){
-      case Status.Uninialized:
-      return Splash();
+      case Status.Uninitialized:
+        return Splash();
       case Status.Unauthenticated:
       case Status.Authenticating:
         return Login();
       case Status.Authenticated:
-       return HomePage();  
+        return HomePage();
       default: return Login();
-      
     }
   }
 }
+
+
 
 

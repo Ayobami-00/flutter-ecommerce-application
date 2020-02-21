@@ -1,16 +1,21 @@
-# flutter_ecommerce_application
+# Flutter ecommerce 
 
-A new Flutter project.
+This is a flutter ecommerce app (still under development), and is only the user side of the app, 
+to check the admin side [Click here](https://github.com/Santos-Enoque/admin_side_flutter_ecommerce_app/tree/add_product).
 
-## Getting Started
+<img src="images/flutter_ecommerce.jpg">
 
-This project is a starting point for a Flutter application.
+## Home Screen
+<img src="images/home.jpg">
 
-A few resources to get you started if this is your first Flutter project:
+## Sign in and Sign up Screens
+<img src="images/sign.jpg">
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Authors Information
+My name is Santos Enoque, I am a flutter and python developer, for more information please check the links bellow.
+
+- [Youtube: Santos Enoque](https://www.youtube.com/channel/UCRl79zOEtiLCglAFZJJzEZQ)
+- [LinkedIn: Santos Enoque](www.linkedin.com/in/santos-enoque)
+- Skype: santos enoque

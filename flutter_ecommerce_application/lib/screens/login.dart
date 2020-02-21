@@ -1,6 +1,6 @@
-import 'package:flutter_ecommerce_application/screens/signup.dart';
-import 'package:flutter_ecommerce_application/widgets/common.dart';
-import 'package:flutter_ecommerce_application/widgets/loading.dart';
+import 'package:chat_app/screens/signup.dart';
+import 'package:chat_app/widgets/common.dart';
+import 'package:chat_app/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -124,7 +124,7 @@ class _LoginState extends State<Login> {
                               child: MaterialButton(
                                 onPressed: () async{
                                   if(_formKey.currentState.validate()){
-                                    if(!await user.SignIn(_email.text, _password.text))
+                                    if(!await user.signIn(_email.text, _password.text))
                                       _key.currentState.showSnackBar(SnackBar(content: Text("Sign in failed")));
                                   }
                                 },

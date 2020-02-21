@@ -1,10 +1,12 @@
-import 'package:flutter_ecommerce_application/provider/user_provider.dart';
-import 'package:flutter_ecommerce_application/screens/product_details.dart';
-import 'package:flutter_ecommerce_application/widgets/custom_app_bar.dart';
-import 'package:flutter_ecommerce_application/widgets/featured_products.dart';
-import 'package:flutter_ecommerce_application/widgets/product_card.dart';
-import 'package:flutter_ecommerce_application/widgets/search.dart';
+import 'package:chat_app/provider/app_provider.dart';
+import 'package:chat_app/provider/user_provider.dart';
+import 'package:chat_app/screens/product_details.dart';
+import 'package:chat_app/widgets/custom_app_bar.dart';
+import 'package:chat_app/widgets/featured_products.dart';
+import 'package:chat_app/widgets/product_card.dart';
+import 'package:chat_app/widgets/search.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    AppProvider appProvider = Provider.of<AppProvider>(context);
 
     return Scaffold(
       body: SafeArea(
@@ -39,6 +42,7 @@ class _HomePageState extends State<HomePage> {
             ),
             FeaturedProducts(),
 
+            Text(appProvider.featureProducts.length.toString(), style: TextStyle(color: Colors.black),),
 //          recent products
             Row(
               children: <Widget>[
@@ -50,20 +54,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            ProductCard(
-              brand: 'SantosBrand',
-              name: 'Lux Blazer',
-              price: 24.00,
-              onSale: true,
-              picture: '',
-            ),
-            ProductCard(
-              brand: 'SantosBrand',
-              name: 'Lux Blazer',
-              price: 24.00,
-              onSale: true,
-              picture: '',
-            ),
+     
             ProductCard(
               brand: 'SantosBrand',
               name: 'Lux Blazer',
