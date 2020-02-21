@@ -1,7 +1,4 @@
-# Flutter ecommerce 
-
-This is a flutter ecommerce app (still under development), and is only the user side of the app, 
-to check the admin side [Click here](https://github.com/Santos-Enoque/admin_side_flutter_ecommerce_app/tree/add_product).
+# Flutter ecommerce app based on the tutorial by Santos Enoque
 
 <img src="images/flutter_ecommerce.jpg">
 
@@ -13,9 +10,4 @@ to check the admin side [Click here](https://github.com/Santos-Enoque/admin_side
 
 
 
-## Authors Information
-My name is Santos Enoque, I am a flutter and python developer, for more information please check the links bellow.
 
-- [Youtube: Santos Enoque](https://www.youtube.com/channel/UCRl79zOEtiLCglAFZJJzEZQ)
-- [LinkedIn: Santos Enoque](www.linkedin.com/in/santos-enoque)
-- Skype: santos enoque
